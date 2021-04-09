@@ -105,17 +105,17 @@ void Binarization(BYTE * Img, BYTE * Out, int W, int H, BYTE Threshold)
 //
 //}
 
-void AverageConv(BYTE* Img, BYTE* Out, int W, int H) // ¹Ú½ºÆòÈ°È­
+void AverageConv(BYTE* Img, BYTE* Out, int W, int H) // ë°•ìŠ¤í‰í™œí™”
 {
 	double Kernel[3][3] = {0.11111, 0.11111, 0.11111,
 										0.11111, 0.11111, 0.11111,
 										0.11111, 0.11111, 0.11111	};
 	double SumProduct = 0.0;
-	for (int i = 1; i < H-1; i++) { // YÁÂÇ¥ (Çà)
-		for (int j = 1; j < W-1; j++) { // XÁÂÇ¥ (¿­)
-			for (int m = -1; m <= 1; m++) { // Kernel Çà(-1ºÎÅÍ 1±îÁö ÀÎ ÀÌÀ¯´Â ¼¾ÅÍÀ§Ä¡°¡ 1,1ÀÏÅ×´Ï ´õÇØ¼­ 0ÀÌ µÇµµ·Ï)
-				for (int n = -1; n <= 1; n++) { // Kernel ¿­
-					SumProduct += Img[(i+m)*W + (j+n)] * Kernel[m+1][n+1];//x,yÀÇ À§Ä¡´Â y*w+xÀÓ w´Â ³Êºñ
+	for (int i = 1; i < H-1; i++) { // Yì¢Œí‘œ (í–‰)
+		for (int j = 1; j < W-1; j++) { // Xì¢Œí‘œ (ì—´)
+			for (int m = -1; m <= 1; m++) { // Kernel í–‰(-1ë¶€í„° 1ê¹Œì§€ ì¸ ì´ìœ ëŠ” ì„¼í„°ìœ„ì¹˜ê°€ 1,1ì¼í…Œë‹ˆ ë”í•´ì„œ 0ì´ ë˜ë„ë¡)
+				for (int n = -1; n <= 1; n++) { // Kernel ì—´
+					SumProduct += Img[(i+m)*W + (j+n)] * Kernel[m+1][n+1];//x,yì˜ ìœ„ì¹˜ëŠ” y*w+xì„ wëŠ” ë„ˆë¹„
 				}
 			}
 			Out[i * W + j] = (BYTE)SumProduct;
@@ -124,16 +124,16 @@ void AverageConv(BYTE* Img, BYTE* Out, int W, int H) // ¹Ú½ºÆòÈ°È­
 	}
 }
 
-void GaussAvrConv(BYTE* Img, BYTE* Out, int W, int H) // °¡¿ì½Ã¾ÈÆòÈ°È­
+void GaussAvrConv(BYTE* Img, BYTE* Out, int W, int H) // ê°€ìš°ì‹œì•ˆí‰í™œí™”
 {
 	double Kernel[3][3] = {0.0625, 0.125, 0.0625,
 										0.125, 0.25, 0.125,
 										0.0625, 0.125, 0.0625 };
 	double SumProduct = 0.0;
-	for (int i = 1; i < H - 1; i++) { // YÁÂÇ¥ (Çà)
-		for (int j = 1; j < W - 1; j++) { // XÁÂÇ¥ (¿­)
-			for (int m = -1; m <= 1; m++) { // Kernel Çà
-				for (int n = -1; n <= 1; n++) { // Kernel ¿­
+	for (int i = 1; i < H - 1; i++) { // Yì¢Œí‘œ (í–‰)
+		for (int j = 1; j < W - 1; j++) { // Xì¢Œí‘œ (ì—´)
+			for (int m = -1; m <= 1; m++) { // Kernel í–‰
+				for (int n = -1; n <= 1; n++) { // Kernel ì—´
 					SumProduct += Img[(i + m) * W + (j + n)] * Kernel[m + 1][n + 1];
 				}
 			}
@@ -143,36 +143,36 @@ void GaussAvrConv(BYTE* Img, BYTE* Out, int W, int H) // °¡¿ì½Ã¾ÈÆòÈ°È­
 	}
 }
 
-void Prewitt_X_Conv(BYTE* Img, BYTE* Out, int W, int H) // Prewitt ¸¶½ºÅ© X
+void Prewitt_X_Conv(BYTE* Img, BYTE* Out, int W, int H) // Prewitt ë§ˆìŠ¤í¬ X
 {
 	double Kernel[3][3] = { -1.0, 0.0, 1.0,
 										-1.0, 0.0, 1.0,
 										-1.0, 0.0, 1.0 };
 	double SumProduct = 0.0;
-	for (int i = 1; i < H - 1; i++) { // YÁÂÇ¥ (Çà)
-		for (int j = 1; j < W - 1; j++) { // XÁÂÇ¥ (¿­)
-			for (int m = -1; m <= 1; m++) { // Kernel Çà
-				for (int n = -1; n <= 1; n++) { // Kernel ¿­
+	for (int i = 1; i < H - 1; i++) { // Yì¢Œí‘œ (í–‰)
+		for (int j = 1; j < W - 1; j++) { // Xì¢Œí‘œ (ì—´)
+			for (int m = -1; m <= 1; m++) { // Kernel í–‰
+				for (int n = -1; n <= 1; n++) { // Kernel ì—´
 					SumProduct += Img[(i + m) * W + (j + n)] * Kernel[m + 1][n + 1];
 				}
 			}
 			// 0 ~ 765  =====> 0 ~ 255
-			Out[i * W + j] = abs((long)SumProduct) / 3;//abs´Â Àı´ñ°ª±¸ÇÏ´Â ÇÔ¼ö
+			Out[i * W + j] = abs((long)SumProduct) / 3;//absëŠ” ì ˆëŒ“ê°’êµ¬í•˜ëŠ” í•¨ìˆ˜
 			SumProduct = 0.0;
 		}
 	}
 }
 
-void Prewitt_Y_Conv(BYTE* Img, BYTE* Out, int W, int H) // Prewitt ¸¶½ºÅ© X
+void Prewitt_Y_Conv(BYTE* Img, BYTE* Out, int W, int H) // Prewitt ë§ˆìŠ¤í¬ X
 {
 	double Kernel[3][3] = { -1.0, -1.0, -1.0,
 										0.0, 0.0, 0.0,
 										1.0, 1.0, 1.0 };
 	double SumProduct = 0.0;
-	for (int i = 1; i < H - 1; i++) { // YÁÂÇ¥ (Çà)
-		for (int j = 1; j < W - 1; j++) { // XÁÂÇ¥ (¿­)
-			for (int m = -1; m <= 1; m++) { // Kernel Çà
-				for (int n = -1; n <= 1; n++) { // Kernel ¿­
+	for (int i = 1; i < H - 1; i++) { // Yì¢Œí‘œ (í–‰)
+		for (int j = 1; j < W - 1; j++) { // Xì¢Œí‘œ (ì—´)
+			for (int m = -1; m <= 1; m++) { // Kernel í–‰
+				for (int n = -1; n <= 1; n++) { // Kernel ì—´
 					SumProduct += Img[(i + m) * W + (j + n)] * Kernel[m + 1][n + 1];
 				}
 			}
@@ -183,16 +183,16 @@ void Prewitt_Y_Conv(BYTE* Img, BYTE* Out, int W, int H) // Prewitt ¸¶½ºÅ© X
 	}
 }
 
-void Sobel_X_Conv(BYTE* Img, BYTE* Out, int W, int H) // Prewitt ¸¶½ºÅ© X
+void Sobel_X_Conv(BYTE* Img, BYTE* Out, int W, int H) // Prewitt ë§ˆìŠ¤í¬ X
 {
 	double Kernel[3][3] = { -1.0, 0.0, 1.0,
 										-2.0, 0.0, 2.0,
 										-1.0, 0.0, 1.0 };
 	double SumProduct = 0.0;
-	for (int i = 1; i < H - 1; i++) { // YÁÂÇ¥ (Çà)
-		for (int j = 1; j < W - 1; j++) { // XÁÂÇ¥ (¿­)
-			for (int m = -1; m <= 1; m++) { // Kernel Çà
-				for (int n = -1; n <= 1; n++) { // Kernel ¿­
+	for (int i = 1; i < H - 1; i++) { // Yì¢Œí‘œ (í–‰)
+		for (int j = 1; j < W - 1; j++) { // Xì¢Œí‘œ (ì—´)
+			for (int m = -1; m <= 1; m++) { // Kernel í–‰
+				for (int n = -1; n <= 1; n++) { // Kernel ì—´
 					SumProduct += Img[(i + m) * W + (j + n)] * Kernel[m + 1][n + 1];
 				}
 			}
@@ -203,16 +203,16 @@ void Sobel_X_Conv(BYTE* Img, BYTE* Out, int W, int H) // Prewitt ¸¶½ºÅ© X
 	}
 }
 
-void Sobel_Y_Conv(BYTE* Img, BYTE* Out, int W, int H) // Prewitt ¸¶½ºÅ© X
+void Sobel_Y_Conv(BYTE* Img, BYTE* Out, int W, int H) // Prewitt ë§ˆìŠ¤í¬ X
 {
 	double Kernel[3][3] = { -1.0, -2.0, -1.0,
 										0.0, 0.0, 0.0,
 										1.0, 2.0, 1.0 };
 	double SumProduct = 0.0;
-	for (int i = 1; i < H - 1; i++) { // YÁÂÇ¥ (Çà)
-		for (int j = 1; j < W - 1; j++) { // XÁÂÇ¥ (¿­)
-			for (int m = -1; m <= 1; m++) { // Kernel Çà
-				for (int n = -1; n <= 1; n++) { // Kernel ¿­
+	for (int i = 1; i < H - 1; i++) { // Yì¢Œí‘œ (í–‰)
+		for (int j = 1; j < W - 1; j++) { // Xì¢Œí‘œ (ì—´)
+			for (int m = -1; m <= 1; m++) { // Kernel í–‰
+				for (int n = -1; n <= 1; n++) { // Kernel ì—´
 					SumProduct += Img[(i + m) * W + (j + n)] * Kernel[m + 1][n + 1];
 				}
 			}
@@ -223,36 +223,36 @@ void Sobel_Y_Conv(BYTE* Img, BYTE* Out, int W, int H) // Prewitt ¸¶½ºÅ© X
 	}
 }
 
-void Laplace_Conv(BYTE* Img, BYTE* Out, int W, int H) // Prewitt ¸¶½ºÅ© X
+void Laplace_Conv(BYTE* Img, BYTE* Out, int W, int H) // Prewitt ë§ˆìŠ¤í¬ X
 {
 	double Kernel[3][3] = { -1.0, -1.0, -1.0,
 										-1.0, 8.0, -1.0,
 										-1.0, -1.0, -1.0 };
 	double SumProduct = 0.0;
-	for (int i = 1; i < H - 1; i++) { // YÁÂÇ¥ (Çà)
-		for (int j = 1; j < W - 1; j++) { // XÁÂÇ¥ (¿­)
-			for (int m = -1; m <= 1; m++) { // Kernel Çà
-				for (int n = -1; n <= 1; n++) { // Kernel ¿­
+	for (int i = 1; i < H - 1; i++) { // Yì¢Œí‘œ (í–‰)
+		for (int j = 1; j < W - 1; j++) { // Xì¢Œí‘œ (ì—´)
+			for (int m = -1; m <= 1; m++) { // Kernel í–‰
+				for (int n = -1; n <= 1; n++) { // Kernel ì—´
 					SumProduct += Img[(i + m) * W + (j + n)] * Kernel[m + 1][n + 1];
 				}
 			}
-			// 0 ~ 2040  =====> 0 ~ 255(8ÀÌ ÃÖ´ë°ªÀÌ¶ó¼­)
+			// 0 ~ 2040  =====> 0 ~ 255(8ì´ ìµœëŒ€ê°’ì´ë¼ì„œ)
 			Out[i * W + j] = abs((long)SumProduct) / 8;
 			SumProduct = 0.0;
 		}
 	}
 }
 
-void Laplace_Conv_DC(BYTE* Img, BYTE* Out, int W, int H) // Prewitt ¸¶½ºÅ© X
+void Laplace_Conv_DC(BYTE* Img, BYTE* Out, int W, int H) // Prewitt ë§ˆìŠ¤í¬ X
 {
 	double Kernel[3][3] = { -1.0, -1.0, -1.0,
 										-1.0, 9.0, -1.0,
 										-1.0, -1.0, -1.0 };
 	double SumProduct = 0.0;
-	for (int i = 1; i < H - 1; i++) { // YÁÂÇ¥ (Çà)
-		for (int j = 1; j < W - 1; j++) { // XÁÂÇ¥ (¿­)
-			for (int m = -1; m <= 1; m++) { // Kernel Çà
-				for (int n = -1; n <= 1; n++) { // Kernel ¿­
+	for (int i = 1; i < H - 1; i++) { // Yì¢Œí‘œ (í–‰)
+		for (int j = 1; j < W - 1; j++) { // Xì¢Œí‘œ (ì—´)
+			for (int m = -1; m <= 1; m++) { // Kernel í–‰
+				for (int n = -1; n <= 1; n++) { // Kernel ì—´
 					SumProduct += Img[(i + m) * W + (j + n)] * Kernel[m + 1][n + 1];
 				}
 			}
@@ -267,9 +267,9 @@ void Laplace_Conv_DC(BYTE* Img, BYTE* Out, int W, int H) // Prewitt ¸¶½ºÅ© X
 
 int main()
 {
-	BITMAPFILEHEADER hf; // 14¹ÙÀÌÆ®
-	BITMAPINFOHEADER hInfo; // 40¹ÙÀÌÆ®
-	RGBQUAD hRGB[256]; // 1024¹ÙÀÌÆ®
+	BITMAPFILEHEADER hf; // 14ë°”ì´íŠ¸
+	BITMAPINFOHEADER hInfo; // 40ë°”ì´íŠ¸
+	RGBQUAD hRGB[256]; // 1024ë°”ì´íŠ¸
 	FILE* fp;
 	fp = fopen("lenna.bmp", "rb");
 	if (fp == NULL) {
@@ -281,7 +281,7 @@ int main()
 	fread(hRGB, sizeof(RGBQUAD), 256, fp);
 	int ImgSize = hInfo.biWidth * hInfo.biHeight;
 	BYTE * Image = (BYTE *)malloc(ImgSize);
-	BYTE * Temp = (BYTE*)malloc(ImgSize); // ÀÓ½Ã¹è¿­
+	BYTE * Temp = (BYTE*)malloc(ImgSize); // ì„ì‹œë°°ì—´
 	BYTE* Output = (BYTE*)malloc(ImgSize);
 	fread(Image, sizeof(BYTE), ImgSize, fp);
 	fclose(fp);
@@ -300,7 +300,7 @@ int main()
 	/*Sobel_X_Conv(Image, Temp, hInfo.biWidth, hInfo.biHeight);
 	Sobel_Y_Conv(Image, Output, hInfo.biWidth, hInfo.biHeight);
 	for (int i = 0; i < ImgSize; i++) {
-		if (Temp[i] > Output[i]) 	Output[i] = Temp[i]; //ÀÌ°É·Î Àú °æ°è¸¦ È®½ÇÇÏ°ÔÇÔ
+		if (Temp[i] > Output[i]) 	Output[i] = Temp[i]; //ì´ê±¸ë¡œ ì € ê²½ê³„ë¥¼ í™•ì‹¤í•˜ê²Œí•¨
 	}
 	Binarization(Output, Output, hInfo.biWidth, hInfo.biHeight, 40);*/
 	GaussAvrConv(Image, Temp, hInfo.biWidth, hInfo.biHeight);
