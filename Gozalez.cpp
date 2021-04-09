@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <Windows.h>
-void InverseImage(BYTE* Img, BYTE *Out, int W, int H)//¹İÀü½ÃÅ°´Â ÇÔ¼ö
+void InverseImage(BYTE* Img, BYTE *Out, int W, int H)//ë°˜ì „ì‹œí‚¤ëŠ” í•¨ìˆ˜
 {
 	int ImgSize = W * H;
 	for (int i = 0; i < ImgSize; i++)
@@ -10,7 +10,7 @@ void InverseImage(BYTE* Img, BYTE *Out, int W, int H)//¹İÀü½ÃÅ°´Â ÇÔ¼ö
 		Out[i] = 255 - Img[i];
 	}
 }
-void BrightnessAdj(BYTE* Img, BYTE* Out, int W, int H, int Val)//(³»°¡ º¯È­ÇÏ°í ½ÍÀº¸¸Å­))//¹à±â Á¶ÀıÇÔ¼ö
+void BrightnessAdj(BYTE* Img, BYTE* Out, int W, int H, int Val)//(ë‚´ê°€ ë³€í™”í•˜ê³  ì‹¶ì€ë§Œí¼))//ë°ê¸° ì¡°ì ˆí•¨ìˆ˜
 {
 	int ImgSize = W * 
 		H;
@@ -27,7 +27,7 @@ void BrightnessAdj(BYTE* Img, BYTE* Out, int W, int H, int Val)//(³»°¡ º¯È­ÇÏ°í 
 		else 	Out[i] =Img[i] + Val;
 	}
 }
-void ContrastAdj(BYTE* Img, BYTE* Out, int W, int H, double Val)//´ëºñÇÔ¼ö
+void ContrastAdj(BYTE* Img, BYTE* Out, int W, int H, double Val)//ëŒ€ë¹„í•¨ìˆ˜
 {
 	int ImgSize = W * H;
 	for (int i = 0; i < ImgSize; i++)
@@ -36,19 +36,19 @@ void ContrastAdj(BYTE* Img, BYTE* Out, int W, int H, double Val)//´ëºñÇÔ¼ö
 		{
 			Out[i] = 255;
 		}
-		else 	Out[i] = (BYTE)(Img[i] * Val);// ´õºíÅ¸ÀÔÀ» ´Ù½Ã ¹ÙÀÌÆ® Å¸ÀÔÀ¸·Î
+		else 	Out[i] = (BYTE)(Img[i] * Val);// ë”ë¸”íƒ€ì…ì„ ë‹¤ì‹œ ë°”ì´íŠ¸ íƒ€ì…ìœ¼ë¡œ
 	}
 }
 
-void ObtainHistogram(BYTE* Img, int* Histo, int W, int H)//È÷½ºÅä±×·¥ ±¸ÇÏ´Â ÇÔ¼ö
+void ObtainHistogram(BYTE* Img, int* Histo, int W, int H)//íˆìŠ¤í† ê·¸ë¨ êµ¬í•˜ëŠ” í•¨ìˆ˜
 {
 	int ImgSize = W * H;
 	for (int i = 0; i < ImgSize; i++) {
-		Histo[Img[i]]++; // Æ¯Á¤ È­¼Ò°ªÀ» °¡Áö´Â imgÀÇ °ªÀ» histo¿¡ ³Ö°í Áõ°¡½ÃÄÑ¼­ histo¿¡ °¢ È­¼Ò¼ö°¡ ÃÑ ¸î°³ÀÎÁö ³ªÅ¸³¿
+		Histo[Img[i]]++; // íŠ¹ì • í™”ì†Œê°’ì„ ê°€ì§€ëŠ” imgì˜ ê°’ì„ histoì— ë„£ê³  ì¦ê°€ì‹œì¼œì„œ histoì— ê° í™”ì†Œìˆ˜ê°€ ì´ ëª‡ê°œì¸ì§€ ë‚˜íƒ€ëƒ„
 	}
 }
 
-void ObtainAHistogram(int* Histo, int* AHisto)//´©ÀûÈ÷½ºÅä±×·¥
+void ObtainAHistogram(int* Histo, int* AHisto)//ëˆ„ì íˆìŠ¤í† ê·¸ë¨
 {
 	for (int i = 0; i < 256; i++) {
 		for (int j = 0; j <= i; j++) {
@@ -61,24 +61,24 @@ void HistogramStretching(BYTE * Img, BYTE * Out, int * Histo, int W, int H)
 {
 	int ImgSize = W * H;
 	BYTE Low, High;
-	for (int i = 0; i < 256; i++) {//°¡Àå ÀÛÀº°ª
-		if (Histo[i] != 0) {//low´Â °¡Àå ¿ŞÂÊ¿¡ À§Ä¡
+	for (int i = 0; i < 256; i++) {//ê°€ì¥ ì‘ì€ê°’
+		if (Histo[i] != 0) {//lowëŠ” ê°€ì¥ ì™¼ìª½ì— ìœ„ì¹˜
 			Low = i;
 			break;
 		}
 	}
-	for (int i = 255; i >= 0; i--) {//°¡Àå Å«°ª
-		if (Histo[i] != 0) {//high´Â °¡Àå ¿À¸¥ÂÊ¿¡ À§Ä¡
+	for (int i = 255; i >= 0; i--) {//ê°€ì¥ í°ê°’
+		if (Histo[i] != 0) {//highëŠ” ê°€ì¥ ì˜¤ë¥¸ìª½ì— ìœ„ì¹˜
 			High = i;
 			break;
 		}
 	}
 	for (int i = 0; i < ImgSize; i++) {
-		Out[i] = (BYTE)((Img[i] - Low) / (double)(High - Low) * 255.0);//ºĞÀÚºĞ¸ğ°¡ byte·Î Á¤¼ö¶ó¼­ Á¤¼ö³ª¿À´Â°Å ¸·±âÀ§ÇØ ´õºí¼±¾ğ
+		Out[i] = (BYTE)((Img[i] - Low) / (double)(High - Low) * 255.0);//ë¶„ìë¶„ëª¨ê°€ byteë¡œ ì •ìˆ˜ë¼ì„œ ì •ìˆ˜ë‚˜ì˜¤ëŠ”ê±° ë§‰ê¸°ìœ„í•´ ë”ë¸”ì„ ì–¸
 	}
 }
 void HistogramEqualization(BYTE* Img, BYTE* Out, int* AHisto, int W, int H)
-{//ÆòÈ°È­ 
+{//í‰í™œí™” 
 	int ImgSize = W * H;
 	int Nt = W * H, Gmax = 255;
 	double Ratio = Gmax / (double)Nt;
@@ -105,7 +105,7 @@ int GozalezBinThresh(int *Histo)
 {
 	BYTE Low = 0, High = 0;
 	double m1 = 0.0, m2 = 0.0;
-	int g1, g2, sum1, sum2, temp=0, T;//g1 g2·Î ¿µ¿ªÀ» ³ª´«ÈÄ °¢°¢ÀÇ ÇÕ
+	int g1, g2, sum1, sum2, temp=0, T;//g1 g2ë¡œ ì˜ì—­ì„ ë‚˜ëˆˆí›„ ê°ê°ì˜ í•©
 	for (int i = 0; i < 256; i++) {
 		if (Histo[i] != 0) {
 			Low = i;
@@ -142,19 +142,19 @@ int GozalezBinThresh(int *Histo)
 		T = (int)((m1 + m2) / 2.0);
 		
 
-		if ((T - temp < 3) && (T - temp > -3)) {//ex) T1°ú temp0ÀÌ if¹®À» µé¾î°¡°ÔµÊ ±×·¯¹Ç·Î Ãâ·ÂÀº ÇöÀçÀÎ T°¡ ³ª¿Í¾ßÇÔ
+		if ((T - temp < 3) && (T - temp > -3)) {//ex) T1ê³¼ temp0ì´ ifë¬¸ì„ ë“¤ì–´ê°€ê²Œë¨ ê·¸ëŸ¬ë¯€ë¡œ ì¶œë ¥ì€ í˜„ì¬ì¸ Tê°€ ë‚˜ì™€ì•¼í•¨
 			break;
 		}
 		temp = T; 
 	} while (1);
 
-	return T; //temp ¹İÈ¯½Ã if¹® Åë°úº¸´Ù ÇÏ³ª ÀÛ¾ÆÁø°ªÀÌ ³ª¿À°Ô µÊÀ¸·Î T¹İÈ¯
+	return T; //temp ë°˜í™˜ì‹œ ifë¬¸ í†µê³¼ë³´ë‹¤ í•˜ë‚˜ ì‘ì•„ì§„ê°’ì´ ë‚˜ì˜¤ê²Œ ë¨ìœ¼ë¡œ Të°˜í™˜
 }
 int main()
 {
-	BITMAPFILEHEADER hf; // 14¹ÙÀÌÆ®
-	BITMAPINFOHEADER hInfo; // 40¹ÙÀÌÆ®
-	RGBQUAD hRGB[256]; // 1024¹ÙÀÌÆ®
+	BITMAPFILEHEADER hf; // 14ë°”ì´íŠ¸
+	BITMAPINFOHEADER hInfo; // 40ë°”ì´íŠ¸
+	RGBQUAD hRGB[256]; // 1024ë°”ì´íŠ¸
 	FILE* fp;
 	fp = fopen("coin.bmp", "rb");
 	if (fp == NULL) {
@@ -170,7 +170,7 @@ int main()
 	fread(Image, sizeof(BYTE), ImgSize, fp);
 	fclose(fp);
 
-	int Histo[256] = { 0 };//0ºÎÅÍ 255±îÁö È­¼Ò°ªÀÌ ÀÖ±â¿¡ 256¹è¿­ 
+	int Histo[256] = { 0 };//0ë¶€í„° 255ê¹Œì§€ í™”ì†Œê°’ì´ ìˆê¸°ì— 256ë°°ì—´ 
 	int AHisto[256] = { 0 };
 
 	ObtainHistogram(Image, Histo, hInfo.biWidth, hInfo.biHeight);
