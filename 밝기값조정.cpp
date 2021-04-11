@@ -20,7 +20,7 @@ void main()
 	fclose(fp);
 
 	for (int i = 0; i < ImgSize; i++)
-		Output[i] = Image[i];
+		Output[i] = Image[i];//원본이미지
 	
 	fp = fopen("output1.bmp", "wb");
 	fwrite(&hf, sizeof(BYTE), sizeof(BITMAPFILEHEADER), fp);
@@ -29,7 +29,7 @@ void main()
 	fwrite(Output, sizeof(BYTE), ImgSize, fp);
 
 	for (int i = 0; i < ImgSize; i++)
-		Output[i] = Image[i]+50;
+		Output[i] = Image[i]+50;//밝기값 50증가
 	fp = fopen("output2.bmp", "wb");
 	fwrite(&hf, sizeof(BYTE), sizeof(BITMAPFILEHEADER), fp);
 	fwrite(&hInfo, sizeof(BYTE), sizeof(BITMAPINFOHEADER), fp);
@@ -38,7 +38,7 @@ void main()
 
 
 	for (int i = 0; i < ImgSize; i++)
-		Output[i] = 255 - Image[i];
+		Output[i] = 255 - Image[i];//반전이미지
 	fp = fopen("output3.bmp", "wb");
 	fwrite(&hf, sizeof(BYTE), sizeof(BITMAPFILEHEADER), fp);
 	fwrite(&hInfo, sizeof(BYTE), sizeof(BITMAPINFOHEADER), fp);
