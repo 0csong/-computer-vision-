@@ -47,7 +47,7 @@ void ObtainHistogram(BYTE* Img, int* Histo, int W, int H)
 	}
 }
 
-void ObtainAHistogram(int* Histo, int* AHisto)
+void ObtainAHistogram(int* Histo, int* AHisto)//누적히스토그램
 {
 	for (int i = 0; i < 256; i++) {
 		for (int j = 0; j <= i; j++) {
@@ -76,12 +76,12 @@ void HistogramStretching(BYTE * Img, BYTE * Out, int * Histo, int W, int H)
 		Out[i] = (BYTE)((Img[i] - Low) / (double)(High - Low) * 255.0);
 	}
 }
-void HistogramEqualization(BYTE* Img, BYTE* Out, int* AHisto, int W, int H)
+void HistogramEqualization(BYTE* Img, BYTE* Out, int* AHisto, int W, int H)//히스토그램 평활화
 {
 	int ImgSize = W * H;
 	int Nt = W * H, Gmax = 255;
 	double Ratio = Gmax / (double)Nt;
-	BYTE NormSum[256];
+	BYTE NormSum[256];// 평활화한 
 	for (int i = 0; i < 256; i++) {
 		NormSum[i] = (BYTE)(Ratio * AHisto[i]);
 	}
@@ -143,11 +143,11 @@ void GaussAvrConv(BYTE* Img, BYTE* Out, int W, int H) // 가우시안평활화
 	}
 }
 
-void Prewitt_X_Conv(BYTE* Img, BYTE* Out, int W, int H) // Prewitt 마스크 X
+void Prewitt_X_Conv(BYTE* Img, BYTE* Out, int W, int H) // Prewitt 마스크 X //x기준 변화를 찾음 그래서 세로의 경계가 나옴
 {
 	double Kernel[3][3] = { -1.0, 0.0, 1.0,
-										-1.0, 0.0, 1.0,
-										-1.0, 0.0, 1.0 };
+				-1.0, 0.0, 1.0,
+				-1.0, 0.0, 1.0 };
 	double SumProduct = 0.0;
 	for (int i = 1; i < H - 1; i++) { // Y좌표 (행)
 		for (int j = 1; j < W - 1; j++) { // X좌표 (열)
@@ -243,11 +243,11 @@ void Laplace_Conv(BYTE* Img, BYTE* Out, int W, int H) // Prewitt 마스크 X
 	}
 }
 
-void Laplace_Conv_DC(BYTE* Img, BYTE* Out, int W, int H) // Prewitt 마스크 X
+void Laplace_Conv_DC(BYTE* Img, BYTE* Out, int W, int H) // Prewitt 마스크 X ,합이 0이지만 경계
 {
 	double Kernel[3][3] = { -1.0, -1.0, -1.0,
-										-1.0, 9.0, -1.0,
-										-1.0, -1.0, -1.0 };
+				-1.0, 9.0, -1.0,
+				-1.0, -1.0, -1.0 };
 	double SumProduct = 0.0;
 	for (int i = 1; i < H - 1; i++) { // Y좌표 (행)
 		for (int j = 1; j < W - 1; j++) { // X좌표 (열)
@@ -257,7 +257,7 @@ void Laplace_Conv_DC(BYTE* Img, BYTE* Out, int W, int H) // Prewitt 마스크 X
 				}
 			}
 			//Out[i * W + j] = abs((long)SumProduct) / 8;
-			if (SumProduct > 255.0) Out[i * W + j] = 255;
+			if (SumProduct > 255.0) Out[i * W + j] = 255; //cilifing
 			else if (SumProduct < 0.0) Out[i * W + j] = 0;
 			else Out[i * W + j] = (BYTE)SumProduct;
 			SumProduct = 0.0;
