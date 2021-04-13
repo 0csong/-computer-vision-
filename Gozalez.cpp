@@ -119,7 +119,7 @@ int GozalezBinThresh(int *Histo)
 		}
 	}
 
-	T = (int)((High + Low) / 2);
+	T = (int)((High + Low) / 2); //treshhold초기값
 
 	do {
 		sum1 = 0;
@@ -129,13 +129,13 @@ int GozalezBinThresh(int *Histo)
 
 		for (int i = Low; i <= T; i++) {
 			sum1 += i * Histo[i];
-			g1 += Histo[i];
+			g1 += Histo[i];  //g1구역
 		}
 		m1 = sum1 / (double)g1;
 
 		for (int i = T + 1; i <= High; i++) {
 			sum2 += i * Histo[i];
-			g2 += Histo[i];
+			g2 += Histo[i]; //g2구역
 		}
 		m2 = sum2 / (double)g2;
 
