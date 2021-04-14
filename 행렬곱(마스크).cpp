@@ -166,9 +166,9 @@ void Prewitt_X_Conv(BYTE* Img, BYTE* Out, int W, int H) // Prewitt 마스크 X /
 void Prewitt_Y_Conv(BYTE* Img, BYTE* Out, int W, int H) // Prewitt 마스크 X
 {
 	double Kernel[3][3] = { -1.0, -1.0, -1.0,
-										0.0, 0.0, 0.0,
-										1.0, 1.0, 1.0 };
-	double SumProduct = 0.0;
+				0.0, 0.0, 0.0,
+				1.0, 1.0, 1.0 };
+	double SumProduct = 0.0
 	for (int i = 1; i < H - 1; i++) { // Y좌표 (행)
 		for (int j = 1; j < W - 1; j++) { // X좌표 (열)
 			for (int m = -1; m <= 1; m++) { // Kernel 행
