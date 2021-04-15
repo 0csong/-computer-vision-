@@ -384,7 +384,8 @@ int main()
 	
 	//HorizontalFlip(Image, W, H);// 수평전환	
 	//VerticalFlip(Image, W, H);//수직전환
-	//Translation(Image, Output, Tx, Ty, H, W);//위치변환	
+	//Translation(Image, Output, Tx, Ty, H, W);//위치변환
+	Rotation(Image, Output, W, H, 30);//영상의 원점을 중심으로 회전
 	SaveBMPFile(hf, hInfo, hRGB, Output, hInfo.biWidth, hInfo.biHeight, "output_lenna.bmp");
 	free(Image);
 	free(Output);
