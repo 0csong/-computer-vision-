@@ -362,14 +362,18 @@ int main()
 		if (Temp[i] > Output[i]) 	Output[i] = Temp[i]; //이걸로 저 경계를 확실하게함
 	}
 	Binarization(Output, Output, hInfo.biWidth, hInfo.biHeight, 40);*/
-	GaussAvrConv(Image, Temp, hInfo.biWidth, hInfo.biHeight);
-	Laplace_Conv_DC(Temp, Output, hInfo.biWidth, hInfo.biHeight);
+	//GaussAvrConv(Image, Temp, hInfo.biWidth, hInfo.biHeight);
+	//Laplace_Conv_DC(Temp, Output, hInfo.biWidth, hInfo.biHeight);
 	
 	//HistogramStretching(Image, Output, Histo, hInfo.biWidth, hInfo.biHeight);
 	//InverseImage(Image, Output, hInfo.biWidth, hInfo.biHeight);
 	//BrightnessAdj(Image, Output, hInfo.biWidth, hInfo.biHeight, 70);
 	//ContrastAdj(Image, Output, hInfo.biWidth, hInfo.biHeight, 0.5);
-
+	
+	//HorizontalFlip(Image, W, H);
+	//VerticalFlip(Image, W, H);
+	//Translation(Image, Output, Tx, Ty, H, W);
+	//Scaling(Image, Output, W, H, 0.7, 0.7);
 	fp = fopen("output.bmp", "wb");
 	fwrite(&hf, sizeof(BYTE), sizeof(BITMAPFILEHEADER), fp);
 	fwrite(&hInfo, sizeof(BYTE), sizeof(BITMAPINFOHEADER), fp);
