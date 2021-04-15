@@ -264,6 +264,65 @@ void Laplace_Conv_DC(BYTE* Img, BYTE* Out, int W, int H) // Prewitt 마스크 X 
 		}
 	}
 }
+void DrawCrossLine(BYTE* Img, int W, int H, int Cx, int Cy) {
+// Img: 가로/세로 라인을 그릴 이미지배열, W: 영상 가로사이즈, H: 영상 세로사이즈,
+// Cx: 가로/세로 라인이 교차되는 지점의 X좌표 ,Cy: 가로/세로 라인이 교차되는 지점의 Y좌표
+	for (int i = 0; i < H; i++) {
+		for (int j = 0; j < W; j++) {
+			if (i == Cy || j == Cx) {
+				Img[i * W + j] = 255;
+			}
+		}
+	}
+
+}
+void Translation(BYTE *Img,BYTE* Output,int Tx,int Ty,int H,int W) {
+	Ty *= -1;//bmp파일은 뒤집혀있기에
+	for (int i = 0; i < H; i++) {
+		for (int j = 0; j < W; j++) {
+			if ((i + Ty < H && i + Ty >= 0) && (j + Tx < W && j + Ty >= 0))
+				Output[(i + Ty) * W + (j + Tx)] = Img[i * W + j];
+		}
+	}
+}
+void VerticalFlip(BYTE* Img, int W, int H) {
+	for (int i = 0; i < H / 2; i++) {//Y좌표
+		for (int j = 0; j < W; j++) {//x좌표
+			swap(&Img[i * W + j], &Img[(H - 1-i) * W + j]);
+		}
+	}
+}
+void HorizontalFlip(BYTE* Img, int W, int H) {
+	for (int i = 0; i < W / 2; i++) {//x좌표
+		for (int j = 0; j < H; j++) {//Y좌표
+			swap(&Img[j * W + i], &Img[j * W + (W-1-i)]);
+		}
+	}
+}
+void Scaling(BYTE* Image, BYTE* Output, int W, int H, double SF_x, double SF_y) {
+	int Tmpx, Tmpy;
+	for (int i = 0; i < H; i++) {//스켈링한 위치 i,j
+		for (int j = 0; j < W; j++) {
+			Tmpx = (int)(j / SF_x);//Tmpx,y는 원본 위치를 뜻함 
+			Tmpy = (int)(i / SF_y);//그렇기에 나눠줌
+			if (Tmpy < H && Tmpx < W)
+				Output[i * W + j] = Image[Tmpy * W + Tmpx];
+		}
+	}
+}//이것은 역방향 코드임
+
+void Rotation(BYTE* Image, BYTE* Output, int W, int H, int Angle) {
+	int tmpX, tmpY;//원래 영상좌표
+	double Radian = Angle * 3.141592 / 180.0;//원주율
+	for (int i = 0; i < H; i++) {//변환후 영상 y
+		for (int j = 0; j < W; j++) {//변환후 영상 x
+			tmpX = (int)(cos(Radian) * j + sin(Radian) * i);//회전행렬의 역행렬임
+			tmpY = (int)(-sin(Radian) * j + cos(Radian) * i);
+			if ((tmpY < H && tmpY >= 0) && (tmpX < W && tmpX >= 0))
+				Output[i * W + j] = Image[tmpY * W + tmpX];//
+		}
+	}
+}//마찬가지로 역방향사상를 이용
 
 int main()
 {
