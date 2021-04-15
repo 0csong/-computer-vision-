@@ -100,6 +100,18 @@ void Binarization(BYTE * Img, BYTE * Out, int W, int H, BYTE Threshold)
 	}
 }
 
+void SaveBMPFile(BITMAPFILEHEADER hf, BITMAPINFOHEADER hInfo, 
+	RGBQUAD* hRGB, BYTE* Output, int W, int H, const char* FileName)
+{
+	FILE * fp = fopen(FileName, "wb");
+	fwrite(&hf, sizeof(BYTE), sizeof(BITMAPFILEHEADER), fp);
+	fwrite(&hInfo, sizeof(BYTE), sizeof(BITMAPINFOHEADER), fp);
+	fwrite(hRGB, sizeof(RGBQUAD), 256, fp);
+	fwrite(Output, sizeof(BYTE), W*H, fp);
+	fclose(fp);
+}
+
+
 //int GozalezBinThresh()
 //{
 //
@@ -370,16 +382,10 @@ int main()
 	//BrightnessAdj(Image, Output, hInfo.biWidth, hInfo.biHeight, 70);
 	//ContrastAdj(Image, Output, hInfo.biWidth, hInfo.biHeight, 0.5);
 	
-	//HorizontalFlip(Image, W, H);
-	//VerticalFlip(Image, W, H);
-	//Translation(Image, Output, Tx, Ty, H, W);
-	//Scaling(Image, Output, W, H, 0.7, 0.7);
-	fp = fopen("output.bmp", "wb");
-	fwrite(&hf, sizeof(BYTE), sizeof(BITMAPFILEHEADER), fp);
-	fwrite(&hInfo, sizeof(BYTE), sizeof(BITMAPINFOHEADER), fp);
-	fwrite(hRGB, sizeof(RGBQUAD), 256, fp);
-	fwrite(Output, sizeof(BYTE), ImgSize, fp);
-	fclose(fp);
+	//HorizontalFlip(Image, W, H);// 수평전환	
+	//VerticalFlip(Image, W, H);//수직전환
+	//Translation(Image, Output, Tx, Ty, H, W);//위치변환	
+	SaveBMPFile(hf, hInfo, hRGB, Output, hInfo.biWidth, hInfo.biHeight, "output_lenna.bmp");
 	free(Image);
 	free(Output);
 	free(Temp);
