@@ -335,7 +335,7 @@ void Rotation(BYTE* Image, BYTE* Output, int W, int H, int Angle) {
 		}
 	}
 }//마찬가지로 역방향사상를 이용
-
+//순방향으로 할경우 보간법(linear, neighborhood(인접화소수 가져오기)등으로 채워야함 형변환시 사라지거나 겹치는 화소가생김)
 int main()
 {
 	BITMAPFILEHEADER hf; // 14바이트
