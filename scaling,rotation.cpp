@@ -235,7 +235,7 @@ void Sobel_Y_Conv(BYTE* Img, BYTE* Out, int W, int H) // Prewitt 마스크 X
 	}
 }
 
-void Laplace_Conv(BYTE* Img, BYTE* Out, int W, int H) // Prewitt 마스크 X
+void Laplace_Conv(BYTE* Img, BYTE* Out, int W, int H) // 좌우경계모두를 검출해준다
 {
 	double Kernel[3][3] = { -1.0, -1.0, -1.0,
 										-1.0, 8.0, -1.0,
@@ -392,3 +392,5 @@ int main()
 	free(Temp);
 	return 0;
 }
+
+
