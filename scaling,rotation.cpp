@@ -142,7 +142,7 @@ int GozalezBinThresh()
 			sum1 += i * Histo[i];
 			g1 += Histo[i];
 		}
-		m1 = sum1 / (double)g1;
+		m1 = sum1 / (double)g1; //실수로의 변환
 
 		for (int i = T + 1; i <= High; i++) {
 			sum2 += i * Histo[i];
@@ -150,7 +150,7 @@ int GozalezBinThresh()
 		}
 		m2 = sum2 / (double)g2;
 
-		T = (int)((m1 + m2) / 2.0);
+		T = (int)((m1 + m2) / 2.0);//마지막 T는 
 		
 
 		if ((T - temp < 3) && (T - temp > -3)) {//ex) T1과 temp0이 if문을 들어가게됨 그러므로 출력은 현재인 T가 나와야함
