@@ -153,7 +153,7 @@ int GozalezBinThresh()
 		T = (int)((m1 + m2) / 2.0);//마지막 T는 
 		
 
-		if ((T - temp < 3) && (T - temp > -3)) {//ex) T1과 temp0이 if문을 들어가게됨 그러므로 출력은 현재인 T가 나와야함
+		if ((T - temp < 3) && (T - temp > -3)) {//ex) T1과 temp0이 if문을 들어가게됨 그러므로 출력은 현재인 T가 나와야함 현재 입실론은 3
 			break;
 		}
 		temp = T; 
