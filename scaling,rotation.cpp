@@ -112,10 +112,55 @@ void SaveBMPFile(BITMAPFILEHEADER hf, BITMAPINFOHEADER hInfo,
 }
 
 
-//int GozalezBinThresh()
-//{
-//
-//}
+int GozalezBinThresh()
+{
+	BYTE Low = 0, High = 0;
+	double m1 = 0.0, m2 = 0.0;
+	int g1, g2, sum1, sum2, temp=0, T;//g1 g2로 영역을 나눈후 각각의 합
+	for (int i = 0; i < 256; i++) {
+		if (Histo[i] != 0) {
+			Low = i;
+			break;
+		}
+	}
+	for (int i = 255; i >= 0; i--) {
+		if (Histo[i] != 0) {
+			High = i;
+			break;
+		}
+	}
+
+	T = (int)((High + Low) / 2);
+
+	do {
+		sum1 = 0;
+		g1 = 0;
+		sum2 = 0;
+		g2 = 0;
+
+		for (int i = Low; i <= T; i++) {
+			sum1 += i * Histo[i];
+			g1 += Histo[i];
+		}
+		m1 = sum1 / (double)g1;
+
+		for (int i = T + 1; i <= High; i++) {
+			sum2 += i * Histo[i];
+			g2 += Histo[i];
+		}
+		m2 = sum2 / (double)g2;
+
+		T = (int)((m1 + m2) / 2.0);
+		
+
+		if ((T - temp < 3) && (T - temp > -3)) {//ex) T1과 temp0이 if문을 들어가게됨 그러므로 출력은 현재인 T가 나와야함
+			break;
+		}
+		temp = T; 
+	} while (1);
+
+	return T; //temp 반환시 if문 통과보다 하나 작아진값이 나오게 됨으로 T반환
+}
 
 void AverageConv(BYTE* Img, BYTE* Out, int W, int H) // 박스평활화
 {
