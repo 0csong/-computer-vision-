@@ -100,8 +100,7 @@ void Binarization(BYTE * Img, BYTE * Out, int W, int H, BYTE Threshold)
 	}
 }
 
-void SaveBMPFile(BITMAPFILEHEADER hf, BITMAPINFOHEADER hInfo, 
-	RGBQUAD* hRGB, BYTE* Output, int W, int H, const char* FileName)
+void SaveBMPFile(BITMAPFILEHEADER hf, BITMAPINFOHEADER hInfo, RGBQUAD* hRGB, BYTE* Output, int W, int H, const char* FileName)//파일저장함수
 {
 	FILE * fp = fopen(FileName, "wb");
 	fwrite(&hf, sizeof(BYTE), sizeof(BITMAPFILEHEADER), fp);
@@ -112,7 +111,7 @@ void SaveBMPFile(BITMAPFILEHEADER hf, BITMAPINFOHEADER hInfo,
 }
 
 
-int GozalezBinThresh()
+int GozalezBinThresh //이진화하는 Threshhold값을 구하는 함수
 {
 	BYTE Low = 0, High = 0;
 	double m1 = 0.0, m2 = 0.0;
