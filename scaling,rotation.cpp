@@ -219,7 +219,7 @@ void Prewitt_X_Conv(BYTE* Img, BYTE* Out, int W, int H) // Prewitt 마스크 X /
 	}
 }
 
-void Prewitt_Y_Conv(BYTE* Img, BYTE* Out, int W, int H) // Prewitt 마스크 X
+void Prewitt_Y_Conv(BYTE* Img, BYTE* Out, int W, int H) // Prewitt 마스크 y
 {
 	double Kernel[3][3] = { -1.0, -1.0, -1.0,
 				0.0, 0.0, 0.0,
@@ -239,7 +239,7 @@ void Prewitt_Y_Conv(BYTE* Img, BYTE* Out, int W, int H) // Prewitt 마스크 X
 	}
 }
 
-void Sobel_X_Conv(BYTE* Img, BYTE* Out, int W, int H) // Prewitt 마스크 X
+void Sobel_X_Conv(BYTE* Img, BYTE* Out, int W, int H) // Sobel 마스크 X
 {
 	double Kernel[3][3] = { -1.0, 0.0, 1.0,
 										-2.0, 0.0, 2.0,
@@ -259,7 +259,7 @@ void Sobel_X_Conv(BYTE* Img, BYTE* Out, int W, int H) // Prewitt 마스크 X
 	}
 }
 
-void Sobel_Y_Conv(BYTE* Img, BYTE* Out, int W, int H) // Prewitt 마스크 X
+void Sobel_Y_Conv(BYTE* Img, BYTE* Out, int W, int H) // Sobel 마스크 Y
 {
 	double Kernel[3][3] = { -1.0, -2.0, -1.0,
 										0.0, 0.0, 0.0,
@@ -299,7 +299,7 @@ void Laplace_Conv(BYTE* Img, BYTE* Out, int W, int H) // 좌우경계모두를 �
 	}
 }
 
-void Laplace_Conv_DC(BYTE* Img, BYTE* Out, int W, int H) // Prewitt 마스크 X ,합이 0이지만 경계
+void Laplace_Conv_DC(BYTE* Img, BYTE* Out, int W, int H) // Prewitt 마스크 X ,합이 0이지만 경계추출(x,y축 경계 모두 추출)
 {
 	double Kernel[3][3] = { -1.0, -1.0, -1.0,
 				-1.0, 9.0, -1.0,
