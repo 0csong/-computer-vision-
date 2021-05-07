@@ -695,7 +695,7 @@ int main()
 	int H = hInfo.biHeight, W = hInfo.biWidth;
 	BYTE* Image;
 	BYTE* Output;
-	if (hInfo.biBitCount == 24) { // 트루컬러(팔레트가 없기에 인덱스와 구별)
+	if (hInfo.biBitCount == 24) { // 트루컬러(모든 색 표현 가능, 팔레트x)
 		Image = (BYTE*)malloc(ImgSize * 3);// RGB라서 *3
 		Output = (BYTE*)malloc(ImgSize * 3);
 		fread(Image, sizeof(BYTE), ImgSize * 3, fp);
