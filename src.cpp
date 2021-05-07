@@ -270,12 +270,12 @@ void SaveBMPFile(BITMAPFILEHEADER hf, BITMAPINFOHEADER hInfo,
 	RGBQUAD* hRGB, BYTE* Output, int W, int H, const char* FileName)
 {
 	FILE * fp = fopen(FileName, "wb");
-	if (hInfo.biBitCount == 24) {
+	if (hInfo.biBitCount == 24)//True Color {
 		fwrite(&hf, sizeof(BYTE), sizeof(BITMAPFILEHEADER), fp);
 		fwrite(&hInfo, sizeof(BYTE), sizeof(BITMAPINFOHEADER), fp);
 		fwrite(Output, sizeof(BYTE), W * H * 3, fp);
 	}
-	else {
+	else //index{
 		fwrite(&hf, sizeof(BYTE), sizeof(BITMAPFILEHEADER), fp);
 		fwrite(&hInfo, sizeof(BYTE), sizeof(BITMAPINFOHEADER), fp);
 		fwrite(hRGB, sizeof(RGBQUAD), 256, fp);
@@ -695,8 +695,8 @@ int main()
 	int H = hInfo.biHeight, W = hInfo.biWidth;
 	BYTE* Image;
 	BYTE* Output;
-	if (hInfo.biBitCount == 24) { // 트루컬러
-		Image = (BYTE*)malloc(ImgSize * 3);
+	if (hInfo.biBitCount == 24) { // 트루컬러(팔레트가 없기에 인덱스와 구별)
+		Image = (BYTE*)malloc(ImgSize * 3);// RGB라서 *3
 		Output = (BYTE*)malloc(ImgSize * 3);
 		fread(Image, sizeof(BYTE), ImgSize * 3, fp);
 	}
