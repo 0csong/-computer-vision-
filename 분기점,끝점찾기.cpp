@@ -852,12 +852,12 @@ void FeatureExtractThinImage(BYTE* Image, BYTE* Output, int W, int H) {
 		for (int j = 1; j < W - 1; j++) {
 			if (Image[i * W + j] == 0) { //전경화소일때
 				for (int m = -1; m <= 1; m++) {
-					for (int n = -1; n <= 1; n++) { //주변 8비트 검사
-						if (Image[(i + m) * W + (j + n)] == 0)
+					for (int n = -1; n <= 1; n++) { //주변화소 검사(여기서 전경화소인 자신도 포함됨)
+						if (Image[(i + m) * W + (j + n)] == 0)//(만약 주변화소중 0인게 있다면)
 							count ++;// 주변에 전경화소 갯수
 					}
 				}
-				if ((count == 2) || (count >= 4))//m,n이 0인경우 자기자신 전경화소도 포함되서 2부터
+				if ((count == 2) || (count >= 4))//m,n이 0인경우 기본count=1 2인경우는 끝점
 				{
 					Output[i * W + j] = 255;
 					Output[(i - 1) * W + j] = 128;
