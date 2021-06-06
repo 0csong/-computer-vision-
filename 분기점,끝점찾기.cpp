@@ -847,7 +847,6 @@ void Dilation(BYTE* Image, BYTE* Output, int W, int H)//팽창
 }
 void FeatureExtractThinImage(BYTE* Image, BYTE* Output, int W, int H) {
 	int count = 0;
-	//끝점 체크
 	for (int i = 1; i < H - 1; i++) {
 		for (int j = 1; j < W - 1; j++) {
 			if (Image[i * W + j] == 0) { //전경화소일때
@@ -856,9 +855,9 @@ void FeatureExtractThinImage(BYTE* Image, BYTE* Output, int W, int H) {
 						if (Image[(i + m) * W + (j + n)] == 0)//(만약 주변화소중 0인게 있다면)
 							count ++;// 주변에 전경화소 갯수
 					}
-				}
-				if (count == 2)//m,n이 0인경우도 위에서 포함되기에 cnt가 1
-					//count=1 2인경우는 끝점,4이상이면 분기점
+				}//m,n=0일때 count=1이 됨
+				//끝점 체크
+				if (count == 2)// 끝점은 주변에 이어지는 화소가 1개이므로 기본 count=1에 +1
 				{
 					Output[i * W + j] = 255;//목표화소
 					Output[(i - 1) * W + j] = 128;//표시를위해 주변을 회색으로
@@ -866,7 +865,9 @@ void FeatureExtractThinImage(BYTE* Image, BYTE* Output, int W, int H) {
 					Output[i * W + j - 1] = 128;
 					Output[i * W + j + 1] = 128;
 				}
-				else if(count >= 4) {
+				//분기점 체크
+				else if(count >= 4)//분기점은 주변의 화소가 3개 이상이므로 4개 이상으로 됨
+				{
 					Output[i * W + j] = 255;
 					Output[(i - 1) * W + j] = 128;
 					Output[(i + 1) * W + j] = 128;
