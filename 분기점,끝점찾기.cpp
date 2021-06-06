@@ -857,7 +857,7 @@ void FeatureExtractThinImage(BYTE* Image, BYTE* Output, int W, int H) {
 							count ++;// 주변에 전경화소 갯수
 					}
 				}
-				if (count == 2)//m,n이 0인경우 기본
+				if (count == 2)//m,n이 0인경우도 위에서 포함되기에 cnt가 1
 					//count=1 2인경우는 끝점,4이상이면 분기점
 				{
 					Output[i * W + j] = 255;//목표화소
